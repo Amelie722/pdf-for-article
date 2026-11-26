@@ -6,6 +6,7 @@ import { Channels } from '../shared/types';
 import { Db } from './db';
 import { modules } from './modules';
 import type { ModuleContext } from './modules/types';
+import { checkForUpdatesManually, setupUpdater } from './updater';
 
 // 데이터 폴더를 영문 이름으로 고정 (Windows: %APPDATA%\\PaperReader)
 app.setPath('userData', join(app.getPath('appData'), 'PaperReader'));
@@ -76,6 +77,13 @@ function buildMenu(): void {
           { label: '개발자 도구', role: 'toggleDevTools' },
         ],
       },
+      {
+        label: '도움말',
+        submenu: [
+          { label: '업데이트 확인', click: () => checkForUpdatesManually() },
+          { label: `버전 ${app.getVersion()}`, enabled: false },
+        ],
+      },
     ]),
   );
 }
@@ -115,6 +123,7 @@ async function start(): Promise<void> {
   });
   win.on('closed', () => (win = null));
   await win.loadFile(join(__dirname, '../renderer/index.html'));
+  setupUpdater(() => win);
 }
 
 app.on('before-quit', () => db?.saveNow());
