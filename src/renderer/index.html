@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; worker-src 'self' blob:; font-src 'self' data:">
+  <title>논문 리더</title>
+  <link rel="stylesheet" href="pdf_viewer.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-view="home">
+  <header class="toolbar">
+    <button data-cmd="home" title="홈 (Ctrl+H)">⌂ 홈</button>
+    <button data-cmd="open" title="PDF 열기 (Ctrl+O)">열기</button>
+    <span id="doc-title" class="doc-title"></span>
+    <span class="spacer"></span>
+    <span class="reader-only zoom">
+      <button data-cmd="zoom-out" title="축소 (Ctrl+-)">−</button>
+      <span id="zoom-label">100%</span>
+      <button data-cmd="zoom-in" title="확대 (Ctrl+=)">+</button>
+      <button data-cmd="zoom-fit" title="폭 맞춤 (Ctrl+0)">폭 맞춤</button>
+    </span>
+    <button id="btn-collection" title="하이라이트·메모 모아보기 (Ctrl+Shift+A)">모아보기</button>
+    <button class="reader-only" data-cmd="toggle-sidebar" title="오른쪽 목록 열기/닫기">목록</button>
+  </header>
+
+  <main>
+    <section id="home">
+      <div class="home-inner">
+        <h1>논문 리더</h1>
+        <p>PDF를 이 창에 끌어다 놓거나 <button data-cmd="open">PDF 열기</button>를 누르세요.</p>
+        <h2>최근 문서</h2>
+        <ul id="recent-list"></ul>
+      </div>
+    </section>
+
+    <section id="reader">
+      <div id="viewer" class="pdfViewer"></div>
+      <aside id="sidebar">
+        <h2>하이라이트·메모 <span id="annotation-count" class="badge">0</span></h2>
+        <div id="annotation-list"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div id="selection-toolbar" class="selection-toolbar" hidden></div>
+
+  <dialog id="note-dialog">
+    <form method="dialog">
+      <h3>메모</h3>
+      <blockquote></blockquote>
+      <textarea rows="6" placeholder="메모를 입력하세요 (Ctrl+Enter로 저장)"></textarea>
+      <menu>
+        <button value="cancel">취소</button>
+        <button value="save" class="primary">저장</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <div id="collection" class="collection" hidden>
+    <div class="collection-box">
+      <header>
+        <h2>하이라이트·메모 모아보기</h2>
+        <span class="collection-status"></span>
+        <span class="spacer"></span>
+        <button data-act="copy" title="보이는 항목을 Markdown으로 복사">복사</button>
+        <button data-act="close" title="닫기 (Esc)">닫기</button>
+      </header>
+      <div class="filters">
+        <select name="scope">
+          <option value="current">현재 문서</option>
+          <option value="all">전체 문서</option>
+        </select>
+        <select name="kind">
+          <option value="">하이라이트+메모</option>
+          <option value="highlight">하이라이트만</option>
+          <option value="note">메모만</option>
+        </select>
+        <select name="color"></select>
+        <input name="q" type="search" placeholder="검색 (원문, 메모, 파일명)">
+      </div>
+      <div class="collection-list"></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

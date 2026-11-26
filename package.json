@@ -1,0 +1,46 @@
+{
+  "name": "pdf-for-article",
+  "productName": "논문 리더",
+  "version": "0.1.0",
+  "description": "논문 전용 PDF 리더: 하이라이트, 메모, 서지관리, 번역",
+  "main": "dist/main/main.js",
+  "author": "Amelie722",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "build": "node build/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "start": "npm run build && electron .",
+    "dist:win": "npm run build && electron-builder --win nsis --x64 --publish never"
+  },
+  "dependencies": {
+    "pdfjs-dist": "4.10.38",
+    "sql.js": "1.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.10",
+    "@types/sql.js": "1.4.9",
+    "electron": "33.3.1",
+    "electron-builder": "25.1.8",
+    "esbuild": "0.24.2",
+    "typescript": "5.6.3"
+  },
+  "build": {
+    "appId": "com.amelie722.pdfforarticle",
+    "productName": "논문 리더",
+    "executableName": "PaperReader",
+    "directories": { "output": "release" },
+    "files": ["dist/**/*", "package.json"],
+    "fileAssociations": [
+      { "ext": "pdf", "name": "PDF 문서", "description": "PDF 문서", "role": "Viewer" }
+    ],
+    "win": { "target": "nsis" },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "artifactName": "PaperReader-Setup-${version}.exe",
+      "shortcutName": "논문 리더"
+    }
+  }
+}
