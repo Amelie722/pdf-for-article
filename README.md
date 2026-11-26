@@ -36,7 +36,7 @@ npm run typecheck  # 타입 검사
 npm run dist:win   # Windows 설치 파일 (Windows에서 실행)
 ```
 
-설치 파일은 GitHub Actions(`.github/workflows/build-windows.yml`)가 Windows 서버에서 만듭니다. `v0.1.0` 같은 태그를 올리면 Releases에 자동으로 올라갑니다.
+설치 파일은 GitHub Actions(`.github/workflows/build-windows.yml`)가 Windows 서버에서 만듭니다. main에 올라가면 `package.json`의 버전으로 Releases에 자동으로 올라갑니다.
 
 ### 구조
 
